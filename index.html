@@ -4,17 +4,33 @@
   <meta charset="UTF-8">
   <style>
     body { margin: 0; padding: 0; background: transparent; overflow: hidden; }
+    model-viewer { width: 100vw; height: 100vh; background-color: transparent; cursor: pointer; }
   </style>
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
 </head>
 <body>
+
   <model-viewer 
+    id="viewer"
     src="Alkethadea.glb" 
     alt="Interactive 3D model" 
-    auto-rotate 
-    camera-controls
-    ar 
-    style="width: 100vw; height: 100vh; background-color: transparent;">
+    projection="orthographic"
+    interaction-prompt="none"
+    camera-orbit="0deg 75deg 100%">
   </model-viewer>
+
+  <script>
+    const viewer = document.getElementById('viewer');
+    let currentAngle = 0;
+
+    viewer.addEventListener('click', () => {
+      // Add 90 degrees on each click
+      currentAngle = (currentAngle + 90) % 360;
+      
+      // Keep vertical angle (75deg) and radius (100%) unchanged
+      viewer.cameraOrbit = `${currentAngle}deg 75deg 100%`;
+    });
+  </script>
+
 </body>
 </html>
